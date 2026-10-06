@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+dataset/
+
+# Trained model weights (too large for git; train locally, see model_training/)
+model/*.h5
+model/*.pt
+
+# Datasets (never commit patient data or large dataset folders)
+model_training/dataset/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Env vars (DB credentials etc.)
+.env

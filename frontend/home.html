@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RetinaGuard AI | Intelligent Retinal Screening</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f7f9fc;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #ffffff;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1769aa;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #1769aa;
+        }
+
+        .nav-btn {
+            background: #1769aa;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .nav-btn:hover {
+            background: #125589;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 650px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 70px 7%;
+            background: linear-gradient(135deg, #eef7ff, #ffffff);
+            gap: 50px;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            line-height: 1.15;
+            color: #123b5d;
+            margin-bottom: 22px;
+        }
+
+        .hero-content h1 span {
+            color: #1769aa;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: #5b6470;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            padding: 14px 26px;
+            background: #1769aa;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .primary-btn:hover {
+            background: #125589;
+        }
+
+        .secondary-btn {
+            display: inline-block;
+            padding: 14px 26px;
+            border: 1px solid #1769aa;
+            color: #1769aa;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .secondary-btn:hover {
+            background: #eef7ff;
+        }
+
+        .hero-visual {
+            width: 430px;
+            height: 430px;
+            border-radius: 50%;
+            background: #dff1ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 15px 40px rgba(23, 105, 170, 0.15);
+        }
+
+        .eye-icon {
+            font-size: 150px;
+        }
+
+        /* ================= DISCLAIMER ================= */
+
+        .disclaimer {
+            background: #fff8e6;
+            border-left: 5px solid #f0ad4e;
+            margin: 35px 7%;
+            padding: 18px 22px;
+            border-radius: 6px;
+            color: #6b5425;
+        }
+
+        .disclaimer strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ================= COMMON SECTION ================= */
+
+        section {
+            padding: 80px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            color: #123b5d;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #6b7280;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about {
+            background: white;
+        }
+
+        .about-content {
+            max-width: 950px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 17px;
+            color: #59636e;
+            margin-bottom: 18px;
+        }
+
+        /* ================= HOW IT WORKS ================= */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .step {
+            background: white;
+            padding: 30px 22px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1769aa;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .step h3 {
+            color: #123b5d;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            background: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .feature-card h3 {
+            color: #1769aa;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            background: #123b5d;
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 25px;
+            color: #dce8f2;
+        }
+
+        .cta .primary-btn {
+            background: white;
+            color: #1769aa;
+        }
+
+        .cta .primary-btn:hover {
+            background: #eef7ff;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #0d2c43;
+            color: #cbd5e1;
+            padding: 30px 7%;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                width: 300px;
+                height: 300px;
+            }
+
+            .eye-icon {
+                font-size: 100px;
+            }
+
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a:not(.nav-btn) {
+                display: none;
+            }
+
+            .hero {
+                padding: 50px 5%;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+
+            .steps,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .disclaimer {
+                margin: 25px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <a href="/" class="logo">
+        RetinaGuard AI
+    </a>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="#about">About</a>
+
+        <a href="#how-it-works">How It Works</a>
+
+        <a href="/history">History</a>
+
+        <a href="/screening" class="nav-btn">
+            Start Screening
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Intelligent Retinal Screening
+            <span>for Diabetic Retinopathy</span>
+        </h1>
+
+        <p>
+            RetinaGuard AI uses computer vision and artificial intelligence
+            to analyze retinal fundus images and provide an AI-assisted
+            screening result for diabetic retinopathy severity.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/screening" class="primary-btn">
+                Start Screening
+            </a>
+
+            <a href="#how-it-works" class="secondary-btn">
+                Learn How It Works
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-visual">
+
+        <div class="eye-icon">
+            👁️
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DISCLAIMER ================= -->
+
+<div class="disclaimer">
+
+    <strong>Important Medical Disclaimer</strong>
+
+    RetinaGuard AI is an educational and screening-support system.
+    It does not provide a medical diagnosis. AI results should not
+    replace professional examination by a qualified ophthalmologist
+    or other healthcare professional.
+
+</div>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about" id="about">
+
+    <div class="section-title">
+
+        <h2>About RetinaGuard AI</h2>
+
+        <p>
+            An AI-assisted retinal image screening platform designed
+            to demonstrate the use of computer vision and machine
+            learning in diabetic retinopathy screening.
+        </p>
+
+    </div>
+
+
+    <div class="about-content">
+
+        <p>
+            Diabetic retinopathy is a diabetes-related eye condition
+            that can affect the blood vessels of the retina.
+            Early screening can help identify possible retinal
+            abnormalities that may require professional evaluation.
+        </p>
+
+        <p>
+            RetinaGuard AI analyzes retinal fundus images and
+            classifies them into different diabetic retinopathy
+            severity levels using an artificial intelligence model.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section id="how-it-works">
+
+    <div class="section-title">
+
+        <h2>How It Works</h2>
+
+        <p>
+            The screening process is designed to be simple and easy
+            to understand.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-number">1</div>
+
+            <h3>Upload Image</h3>
+
+            <p>
+                Upload a retinal fundus image obtained from a suitable
+                retinal imaging source or research dataset.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">2</div>
+
+            <h3>Image Analysis</h3>
+
+            <p>
+                The system performs image processing and analyzes
+                retinal features using computer vision and AI.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">3</div>
+
+            <h3>AI Screening</h3>
+
+            <p>
+                The trained model predicts the possible diabetic
+                retinopathy severity category.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">4</div>
+
+            <h3>View Result</h3>
+
+            <p>
+                View the screening result, confidence information
+                and visual explanation of the prediction.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <div class="section-title">
+
+        <h2>Key Features</h2>
+
+        <p>
+            Features planned for the RetinaGuard AI screening platform.
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <h3>AI-Based Screening</h3>
+
+            <p>
+                Uses machine learning and computer vision techniques
+                to analyze retinal fundus images.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>Severity Classification</h3>
+
+            <p>
+                Provides classification across different diabetic
+                retinopathy severity categories.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>Visual Explanation</h3>
+
+            <p>
+                Grad-CAM based visualization can highlight areas
+                that contributed to the AI prediction.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>Screening History</h3>
+
+            <p>
+                Previous screening results can be stored and
+                viewed through the history section.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>PDF Report</h3>
+
+            <p>
+                Screening results can be generated as a downloadable
+                report for educational and record-keeping purposes.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <h3>Admin Analytics</h3>
+
+            <p>
+                An administrative dashboard can provide statistics,
+                screening trends and severity distribution.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <h2>
+        Start Your Retinal Screening
+    </h2>
+
+    <p>
+        Upload a retinal fundus image and explore the
+        AI-assisted screening workflow.
+    </p>
+
+    <a href="/screening" class="primary-btn">
+        Start Screening
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        <strong>RetinaGuard AI</strong>
+        — Intelligent Retinal Screening System
+    </p>
+
+    <p>
+        Educational & Screening Support System | Not a Medical Diagnosis
+    </p>
+
+</footer>
+
+</body>
+</html>

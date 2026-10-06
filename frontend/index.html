@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RetinaGuard AI | Retinal Screening</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Project stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        body {
+            background: #f4f8f8;
+            color: #173333;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .app-navbar {
+            background: linear-gradient(135deg, #056b68, #087f7b);
+            padding: 14px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .eye-icon {
+            margin-right: 6px;
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            color: #075c5a;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            color: #687777;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .card {
+            border: none;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .card-title {
+            color: #075c5a;
+            font-weight: 700;
+        }
+
+        /* =========================
+           UPLOAD AREA
+        ========================= */
+
+        .upload-box {
+            border: 2px dashed #8fc7c4;
+            border-radius: 12px;
+            background: #f8ffff;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .upload-box:hover {
+            border-color: #087f7b;
+            background: #f1fbfa;
+        }
+
+        .upload-icon {
+            font-size: 42px;
+        }
+
+        #previewImg {
+            max-height: 270px;
+            object-fit: contain;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .btn-primary {
+            background: #087f7b;
+            border-color: #087f7b;
+        }
+
+        .btn-primary:hover {
+            background: #056562;
+            border-color: #056562;
+        }
+
+        .btn-success {
+            background: #16856f;
+            border-color: #16856f;
+        }
+
+        .btn-success:hover {
+            background: #106b5a;
+            border-color: #106b5a;
+        }
+
+        /* =========================
+           SAMPLE GALLERY
+        ========================= */
+
+        .sample-heading {
+            color: #075c5a;
+            font-weight: 700;
+        }
+
+        .sample-note {
+            background: #f8f9fa;
+            border-left: 4px solid #087f7b;
+            padding: 10px 12px;
+            border-radius: 5px;
+        }
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        .result-placeholder {
+            min-height: 430px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-icon {
+            font-size: 60px;
+        }
+
+        .grade-badge {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+        }
+
+        .progress-bar {
+            background: #087f7b;
+        }
+
+        .result-table th {
+            width: 55%;
+            color: #536565;
+            font-weight: 600;
+        }
+
+        .result-table td {
+            font-weight: 600;
+        }
+
+        #heatmapImg {
+            width: 100%;
+            max-height: 330px;
+            object-fit: contain;
+            background: #111;
+        }
+
+        /* =========================
+           DISCLAIMER
+        ========================= */
+
+        .medical-disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffe69c;
+            color: #664d03;
+            border-radius: 10px;
+        }
+
+        /* =========================
+           INFO BOX
+        ========================= */
+
+        .screening-info {
+            background: #e9f7f6;
+            border: 1px solid #c8e9e7;
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid #dde8e7;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 768px) {
+            .page-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .upload-box {
+                min-height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar navbar-dark app-navbar">
+
+    <div class="container">
+
+        <div class="d-flex align-items-center">
+
+            <a
+                href="/"
+                class="navbar-brand text-white text-decoration-none"
+            >
+                <span class="eye-icon">&#128065;</span>
+                RetinaGuard AI
+            </a>
+
+        </div>
+
+        <div class="d-flex align-items-center">
+
+            <span class="navbar-text text-light small d-none d-md-inline me-3">
+                Intelligent retinal screening for diabetic retinopathy
+            </span>
+
+            <a
+                href="/"
+                class="btn btn-sm btn-outline-light me-2"
+            >
+                Home
+            </a>
+
+            <a
+                href="/history"
+                class="btn btn-sm btn-outline-light"
+            >
+                History
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="container py-4">
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <h2>
+            New Retinal Screening
+        </h2>
+
+        <p class="mb-0">
+            Upload a retinal fundus image to perform an AI-based
+            screening analysis.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         MEDICAL DISCLAIMER
+    ================================================== -->
+
+    <div
+        class="medical-disclaimer alert text-center mb-4"
+        role="alert"
+    >
+
+        <strong>
+            Screening support only — not a medical diagnosis.
+        </strong>
+
+        <br>
+
+        <span class="small">
+            This system is intended for educational and screening-support
+            purposes. Please consult a qualified eye-care professional
+            for clinical evaluation.
+        </span>
+
+    </div>
+
+
+    <!-- =================================================
+         MAIN ROW
+    ================================================== -->
+
+    <div class="row g-4">
+
+        <!-- =================================================
+             LEFT: IMAGE INPUT
+        ================================================== -->
+
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title mb-2">
+                        1. Upload Retinal Fundus Image
+                    </h5>
+
+                    <p class="text-muted small">
+                        Upload a retinal fundus image for screening,
+                        or select one of the demonstration samples below.
+                    </p>
+
+
+                    <!-- INFO -->
+
+                    <div class="screening-info small mb-3">
+
+                        <strong>Accepted image formats:</strong>
+                        JPG, JPEG, PNG, BMP
+
+                        <br>
+
+                        <strong>Maximum file size:</strong>
+                        15 MB
+
+                    </div>
+
+
+                    <!-- UPLOAD BOX -->
+
+                    <div
+                        class="upload-box text-center p-4 mb-3"
+                        id="dropZone"
+                    >
+
+                        <input
+                            type="file"
+                            id="fileInput"
+                            accept=".jpg,.jpeg,.png,.bmp"
+                            class="d-none"
+                        >
+
+
+                        <!-- Upload prompt -->
+
+                        <div id="uploadPrompt">
+
+                            <div class="upload-icon mb-2">
+                                &#128193;
+                            </div>
+
+                            <p class="mb-2 fw-semibold">
+                                Drag & drop a fundus image here
+                            </p>
+
+                            <p class="text-muted small mb-3">
+                                or
+                            </p>
+
+                            <button
+                                class="btn btn-primary"
+                                id="browseBtn"
+                                type="button"
+                            >
+                                Browse Files
+                            </button>
+
+                        </div>
+
+
+                        <!-- Image preview -->
+
+                        <div class="w-100">
+
+                            <img
+                                id="previewImg"
+                                class="img-fluid rounded d-none"
+                                alt="Selected retinal fundus image preview"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SAMPLE SECTION -->
+
+                    <div class="mt-4">
+
+                        <h6 class="sample-heading mb-2">
+                            Demo Sample Images
+                        </h6>
+
+                        <div class="sample-note small text-muted mb-3">
+
+                            <strong>Demo only:</strong>
+                            These sample images are provided for
+                            testing the application interface.
+                            They should not be interpreted as clinical
+                            patient results.
+
+                        </div>
+
+                        <div
+                            class="row g-2"
+                            id="sampleGallery"
+                        >
+                            <!-- Sample thumbnails injected by script.js -->
+                        </div>
+
+                    </div>
+
+
+                    <!-- ANALYZE -->
+
+                    <button
+                        class="btn btn-success w-100 mt-4 py-2"
+                        id="analyzeBtn"
+                        disabled
+                    >
+
+                        <span id="analyzeBtnText">
+                            Analyze Image
+                        </span>
+
+                        <span
+                            id="analyzeSpinner"
+                            class="spinner-border spinner-border-sm ms-2 d-none"
+                            role="status"
+                        ></span>
+
+                    </button>
+
+
+                    <!-- RESET -->
+
+                    <button
+                        class="btn btn-outline-secondary w-100 mt-2"
+                        id="resetBtn"
+                    >
+                        Try Another Image
+                    </button>
+
+
+                    <!-- ERROR -->
+
+                    <div
+                        id="errorBox"
+                        class="alert alert-danger mt-3 d-none"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT: RESULT
+        ================================================== -->
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title mb-3">
+                        2. AI Screening Result
+                    </h5>
+
+
+                    <!-- RESULT PLACEHOLDER -->
+
+                    <div
+                        id="resultPlaceholder"
+                        class="result-placeholder text-center text-muted"
+                    >
+
+                        <div class="result-icon mb-3">
+                            &#128202;
+                        </div>
+
+                        <h5>
+                            No Screening Result Yet
+                        </h5>
+
+                        <p class="mb-0">
+                            Upload a retinal fundus image or select
+                            a demo sample, then click
+                            <strong>Analyze Image</strong>.
+                        </p>
+
+                    </div>
+
+
+                    <!-- RESULT CONTENT -->
+
+                    <div
+                        id="resultContent"
+                        class="d-none"
+                    >
+
+                        <div class="row g-4">
+
+                            <!-- HEATMAP -->
+
+                            <div class="col-md-6">
+
+                                <div class="mb-2">
+
+                                    <h6 class="fw-bold">
+                                        AI Analysis Visualization
+                                    </h6>
+
+                                    <p class="small text-muted">
+                                        Highlighted regions represent
+                                        areas identified by the analysis.
+                                    </p>
+
+                                </div>
+
+                                <img
+                                    id="heatmapImg"
+                                    class="img-fluid rounded border"
+                                    alt="AI analysis heatmap overlay"
+                                >
+
+                                <p class="small text-muted mt-2">
+                                    Visualization is provided as an
+                                    AI/computer-vision analysis aid.
+                                </p>
+
+                            </div>
+
+
+                            <!-- RESULT DETAILS -->
+
+                            <div class="col-md-6">
+
+                                <!-- GRADE -->
+
+                                <div
+                                    class="grade-badge mb-3"
+                                    id="gradeBadge"
+                                >
+                                    Grade
+                                </div>
+
+
+                                <!-- CONFIDENCE -->
+
+                                <div class="mb-3">
+
+                                    <div class="d-flex justify-content-between small mb-1">
+
+                                        <span>
+                                            Prediction Confidence
+                                        </span>
+
+                                        <span
+                                            id="confidenceText"
+                                            class="fw-semibold"
+                                        >
+                                            0%
+                                        </span>
+
+                                    </div>
+
+                                    <div
+                                        class="progress"
+                                        role="progressbar"
+                                        aria-label="Prediction confidence"
+                                    >
+
+                                        <div
+                                            class="progress-bar"
+                                            id="confidenceBar"
+                                            style="width:0%"
+                                        ></div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- DETAILS TABLE -->
+
+                                <table class="table table-sm result-table mt-3">
+
+                                    <tbody>
+
+                                        <tr>
+
+                                            <th scope="row">
+                                                Lesions detected
+                                            </th>
+
+                                            <td id="lesionCount">
+                                                -
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th scope="row">
+                                                Lesion area
+                                            </th>
+
+                                            <td id="lesionDensity">
+                                                -
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+
+                                            <th scope="row">
+                                                Analysis mode
+                                            </th>
+
+                                            <td id="analysisMode">
+                                                -
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+
+                                <!-- ADVICE -->
+
+                                <div
+                                    class="alert alert-info mt-3 mb-0"
+                                    id="adviceBox"
+                                ></div>
+
+
+                                <!-- REPORT -->
+
+                                <button
+                                    class="btn btn-outline-primary w-100 mt-3"
+                                    id="downloadReportBtn"
+                                >
+
+                                    &#128196;
+
+                                    Download Screening Report
+
+                                    <span
+                                        id="reportSpinner"
+                                        class="spinner-border spinner-border-sm ms-2 d-none"
+                                        role="status"
+                                    ></span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RESULT DISCLAIMER -->
+
+                        <div class="alert alert-warning mt-4 mb-0 small">
+
+                            <strong>Important:</strong>
+
+                            This result is generated by an AI/computer-vision
+                            screening system and should not be considered
+                            a medical diagnosis. A qualified eye-care
+                            professional should perform clinical evaluation.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         HOW THIS SCREENING WORKS
+    ================================================== -->
+
+    <section class="mt-5">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body p-4">
+
+                <h5 class="fw-bold text-center mb-4">
+                    How RetinaGuard AI Screening Works
+                </h5>
+
+                <div class="row text-center g-4">
+
+                    <div class="col-md-3">
+
+                        <div class="fs-2 mb-2">
+                            &#128196;
+                        </div>
+
+                        <h6 class="fw-bold">
+                            1. Upload
+                        </h6>
+
+                        <p class="small text-muted mb-0">
+                            Upload a retinal fundus image.
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <div class="fs-2 mb-2">
+                            &#128300;
+                        </div>
+
+                        <h6 class="fw-bold">
+                            2. Analyze
+                        </h6>
+
+                        <p class="small text-muted mb-0">
+                            The image is processed by the
+                            EfficientNetB0 deep-learning model.
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <div class="fs-2 mb-2">
+                            &#128202;
+                        </div>
+
+                        <h6 class="fw-bold">
+                            3. View Result
+                        </h6>
+
+                        <p class="small text-muted mb-0">
+                            View the screening classification,
+                            confidence, and visualization.
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <div class="fs-2 mb-2">
+                            &#128196;
+                        </div>
+
+                        <h6 class="fw-bold">
+                            4. Report
+                        </h6>
+
+                        <p class="small text-muted mb-0">
+                            Download the screening report.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="text-center text-muted small mt-5 pb-4">
+
+        <div class="mb-1">
+
+            <strong>RetinaGuard AI</strong>
+            &mdash;
+            Intelligent Retinal Screening
+
+        </div>
+
+        <div>
+            MCA Capstone Project Demo
+        </div>
+
+        <div class="mt-2">
+
+            <strong>
+                AI Model:
+            </strong>
+
+            <code>
+                EfficientNetB0
+            </code>
+
+            &nbsp;|&nbsp;
+
+            <strong>
+                Framework:
+            </strong>
+
+            <code>
+                TensorFlow / Keras
+            </code>
+
+        </div>
+
+        <div class="mt-2 text-success">
+
+            <strong>
+                ✓ Trained deep-learning model integrated
+            </strong>
+
+        </div>
+
+        <div class="mt-2">
+
+            <small>
+                Five-class screening:
+                No DR · Mild · Moderate · Severe · Proliferative DR
+            </small>
+
+        </div>
+
+    </footer>
+
+</main>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- RetinaGuard JavaScript -->
+
+<script src="/static/script.js"></script>
+
+</body>
+
+</html>
